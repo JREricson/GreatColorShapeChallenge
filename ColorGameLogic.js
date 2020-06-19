@@ -1,6 +1,9 @@
 /*jshint esversion: 6 */
 
 //instance variables
+var highScores = [];
+var highscore =0;
+
 var lastWasCorrect;
 var curMode = "hard";
   var score = 0;
@@ -42,7 +45,7 @@ var curMode = "hard";
 
 
 {//adding variables to elements in doc
-var myVar;
+var countDownTimer;
   var shapes = document.querySelectorAll(".shape");
   var newGameBtn = document.querySelector("#newBtn");
   var difficultyBtn = document.querySelector("#difficulty");
@@ -52,6 +55,12 @@ var myVar;
   var wrongText = document.querySelector("#wrong");
   var timerText = document.querySelector("#timer");
   var scoreText = document.querySelector("#score");
+  var instructionText = document.querySelector("#instr");
+  var gameOverText = document.querySelector("#gameOver");
+  var highScoreText = document.querySelector("#highScore");
+  var endScoreText = document.querySelector("#endScore");
+
+
 }
 
 {//adding event listeners
@@ -65,26 +74,8 @@ var myVar;
     newGame();
   });
 
-  	for(var i=0; i< shapes.length; i++){
+    addGamelogicListenersToShapes();
 
-      shapes[i].addEventListener("click", function(){
-      var clickedColor = this.style.backgroundColor;
-      var clickedShape = shapeList[answerPosition];
-      if(clickedColor === pickedColor && clickedShape === pickedShape){
-        lastWasCorrect=true;
-        correct++;
-      //  newShapes(); //error here
-      } else {
-        lastWasCorrect=false;
-        wrong++;
-      //  newShapes();//error here
-
-      }
-      updateScore(lastWasCorrect);
-      resetShapes();
-      updateDisplay();
-      });
-    }
 }
 
 
@@ -167,51 +158,106 @@ function changeMode(){ //Todo - function not done yet
 
 }
 
-function updateCunterDisplay(){
+function updateCounterDisplay(){
 
     timerText.textContent = curTime;
 
+}
+
+function addScoreToHighScores(scr){
+  //inset at proper location
+
+}
+
+function showHighScores(){
+
+}
+
+function addToHighScores(){
+  if (score>highscore){
+    highscore = score;
+    return true;
+  } else {
+    return false;
+  }
 }
 
 
 
 
 // function countdownUpdate(){
-//   dMessage("in countdown" );
+//   dlog("in countdown" );
 //   if (curTime >=0){
 //
 //     curTime--;
-//      updateCunterDisplay();
+//      updateCounterDisplay();
 //
 //
 //   } else {
-//      updateCunterDisplay();
+//      updateCounterDisplay();
 //     endgame();
 //     //return;
 //   }
 // }
 
 function endGame(){
+  var audio = new Audio('media/84226__josomebody__crash.wav'); //https://freesound.org/people/josomebody/sounds/84226/
+audio.play();
+  instructionText.style.color= "#212121";
+  colorText.style.color= "#212121";
+  shapeText.style.color= "#212121";
+  gameOverText.style.color= "#e8bc43";
+  gameOverText.innerHTML = "Game Over!!!";
+
+  //Todo add new high scores to game over text
+
+
+if ( addToHighScores()){
+  //endScoreText.innerHTML ="test";
+
+  endScoreText.innerHTML =( "   --- new high Score: "+ highscore);
+  dlog(highscore+"is the high");
+
+
+} else {
+
+    endScoreText.innerHTML =( "  --- your score was: "+ score);
+
+}
+
+gameOverText.style.color= "#e8bc43";
+endScoreText.style.color= "#e8bc43";
+
+
+//hiding background shapes
   for(var i=0; i< shapes.length; i++){
 
-    shapes[i].color="white";
+
+  shapes[i].style.backgroundColor = "#212121";
   }
 
     //removeListeners
+    //removeEventListersFromShapes();
 
 
 
 
-  errorMessage("method not done yet");
+
 }
 
 
 
 
 function newGame(){
+  endScoreText.innerHTML = "";
+  instructionText.style.color= "white";
+  gameOverText.style.color= "#212121";
+   highScoreText.innerHTML = highscore;
+  removeEventListersFromShapes();
 
-  if (typeof(myvar)!="undefined"){
-      clearInterval(myvar);
+
+  if (typeof(countDownTimer)!="undefined"){
+      clearInterval(countDownTimer);
   }
 
   resetVariables();
@@ -219,17 +265,17 @@ function newGame(){
   updateDisplay();
   //setInterval(function(){ alert("Hello"); }, 3000);
   //setInterval(countdownUpdate(), 1000);
-myvar =  setInterval(function countdownUpdate(){
-    dMessage("in countdown" );
+countDownTimer =  setInterval(function countdownUpdate(){
+
     if (curTime >0){
 
       curTime--;
-       updateCunterDisplay();
+       updateCounterDisplay();
 
 
     } else {
-       updateCunterDisplay();
-       clearInterval(this);
+       updateCounterDisplay();
+       clearInterval(countDownTimer);
       endGame();
       //return;
     }
@@ -323,14 +369,42 @@ function updateScore(ansCorrect){
   if (score<0){
     score = 0;
   }
-  scoreText.textContent = "Score: "+ score;
+  scoreText.textContent =  score;
 
 }
 
+function removeEventListersFromShapes(){
+  for(var i=0; i< numOfShapesToShow; i++){
+
+  //  shapes[i].removeEventListener("click", shapeLogic());
+}
+}
+
+function addGamelogicListenersToShapes(){
 
 
+for(var i=0; i< numOfShapesToShow; i++){
 
+  shapes[i].addEventListener("click", function shapeLogic(){
+  var clickedColor = this.style.backgroundColor;
+  var clickedShape = shapeList[answerPosition];
+  if(clickedColor === pickedColor && clickedShape === pickedShape){
+    lastWasCorrect=true;
+    correct++;
+  //  newShapes(); //error here
+  } else {
+    lastWasCorrect=false;
+    wrong++;
+  //  newShapes();//error here
 
+  }
+  updateScore(lastWasCorrect);
+  resetShapes();
+  updateDisplay();
+  });
+}
+
+}
 
 
 
@@ -354,7 +428,7 @@ function clog(text){
 
 }
 
-function dMessage(text){
+function dlog(text){
   console.log("debug: " + text);
 
 }

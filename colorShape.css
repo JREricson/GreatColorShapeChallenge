@@ -19,7 +19,7 @@ body {
 	float: left;
 	text-align: auto;
 
-	
+
 
 
 }
@@ -33,3 +33,11 @@ max-width: 900px;
 	background:white;
 	color: black;
 }
+
+.hiddenAtStartup{
+color: #212121;
+}
+
+.fade {
+    opacity: 0;
+    transition: .7;

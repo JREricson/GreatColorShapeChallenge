@@ -19,7 +19,7 @@ body {
 	float: left;
 	text-align: auto;
 
-	
+
 
 
 }
@@ -32,4 +32,8 @@ max-width: 900px;
 #stripe {
 	background:white;
 	color: black;
+}
+
+.hiddenAtStartup{
+color:	212121;
 }
