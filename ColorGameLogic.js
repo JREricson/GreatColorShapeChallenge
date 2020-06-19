@@ -1,8 +1,8 @@
 /*jshint esversion: 6 */
-console.log("connected");
+
 //instance variables
-
-
+  var score = 0;
+    var curTime = 40;
    var answerPosition = 0;
    var numOfShapesToShow = 6;
    var correct =0;
@@ -32,7 +32,7 @@ console.log("connected");
   // var shapes =$(".shape");
   //
   // var newGameBtn =$("#newBtn");
-  // var resetBtn = $("#resetBtn");
+  // var difficultyBtn = $("#difficultyBtn");
   // var colorText = $("#colorText");
   // var shapeText = $("#ShapeText");
   // var correctText = $("#correct");
@@ -40,14 +40,15 @@ console.log("connected");
 
 
 {//adding variables to elements in doc
-
+var myVar;
   var shapes = document.querySelectorAll(".shape");
   var newGameBtn = document.querySelector("#newBtn");
-  var resetBtn = document.querySelector("#resetBtn");
+  var difficultyBtn = document.querySelector("#difficulty");
   var colorText = document.querySelector("#colorText");
   var shapeText = document.querySelector("#ShapeText");
   var correctText = document.querySelector("#correct");
   var wrongText = document.querySelector("#wrong");
+  var timerText = document.querySelector("#timer");
 }
 
 {//adding event listeners
@@ -56,7 +57,7 @@ console.log("connected");
   	newGame();
   });
 
-  resetBtn.addEventListener("click", function(){
+  difficultyBtn.addEventListener("click", function(){
   	changeMode();
     newGame();
   });
@@ -90,15 +91,6 @@ console.log("connected");
 
   resetShapes();
   updateDisplay();
-
-  // colorText.textContent = pickedColor;
-  //
-  // colorText.style.color = generateColor();
-  //
-  //  shapeText.textContent = pickedShape;
-  //  shapeText.style.color = generateColor();
-  // correctText.textContent = correct;
-  // wrongText.textContent = wrong;
 
 }
 
@@ -157,12 +149,22 @@ function pickAnswerColorsAndShapes(numOfShapes){
 function changeMode(){ //Todo - function not done yet
   if (numOfShapesToShow == 6){
     numOfShapesToShow = 3;
+          difficultyBtn.textContent = "mode: easy";
     return "easy";
 
   } else {
     numOfShapesToShow = 6;
+      difficultyBtn.textContent = "mode: hard";
     return "hard";
   }
+
+
+}
+
+function updateCunterDisplay(){
+
+    timerText.textContent = curTime;
+
 
 
 }
@@ -170,11 +172,56 @@ function changeMode(){ //Todo - function not done yet
 
 
 
+// function countdownUpdate(){
+//   dMessage("in countdown" );
+//   if (curTime >=0){
+//
+//     curTime--;
+//      updateCunterDisplay();
+//
+//
+//   } else {
+//      updateCunterDisplay();
+//     endgame();
+//     //return;
+//   }
+// }
+
+function endGame(){
+  errorMessage("method not made yet");
+}
+
+
+
+
 function newGame(){
-  correct = 0;
-	wrong = 0;
+
+  if (typeof(myvar)!="undefined"){
+      clearInterval(myvar);
+  }
+
+  resetVariables();
   resetShapes();
   updateDisplay();
+  //setInterval(function(){ alert("Hello"); }, 3000);
+  //setInterval(countdownUpdate(), 1000);
+myvar =  setInterval(function countdownUpdate(){
+    dMessage("in countdown" );
+    if (curTime >0){
+
+      curTime--;
+       updateCunterDisplay();
+
+
+    } else {
+       updateCunterDisplay();
+       clearInterval(this);
+      endgame();
+      //return;
+    }
+  }, 1000);
+  //setInterval(countdownUpdate(), 1000);
+  //new timer
 }
 
 
@@ -238,13 +285,23 @@ function makeShape(i) {
 
 	if(shapeList[i] === "circle"){
 		shapes[i].style.borderRadius = "50%";
+
 	} else {
 		shapes[i].style.borderRadius = "0%";}
 }
 /////////////////
 //timer
+function resetVariables(){
+  score = 0;
+  correct = 0;
+  wrong = 0;
+  curTime = 41;
+}
 
 
+function updateScore(){
+
+}
 
 
 
@@ -266,4 +323,14 @@ function randInt(num){
 
 function errorMessage(message){
   console.log("Error:\t" + message);
+}
+
+function clog(text){
+  console.log(text);
+
+}
+
+function dMessage(text){
+  console.log("debug: " + text);
+
 }
