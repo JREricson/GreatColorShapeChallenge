@@ -1,6 +1,8 @@
 /*jshint esversion: 6 */
 
 //instance variables
+var lastWasCorrect;
+var curMode = "hard";
   var score = 0;
     var curTime = 40;
    var answerPosition = 0;
@@ -49,6 +51,7 @@ var myVar;
   var correctText = document.querySelector("#correct");
   var wrongText = document.querySelector("#wrong");
   var timerText = document.querySelector("#timer");
+  var scoreText = document.querySelector("#score");
 }
 
 {//adding event listeners
@@ -58,7 +61,7 @@ var myVar;
   });
 
   difficultyBtn.addEventListener("click", function(){
-  	changeMode();
+  	curMode = changeMode();
     newGame();
   });
 
@@ -68,13 +71,16 @@ var myVar;
       var clickedColor = this.style.backgroundColor;
       var clickedShape = shapeList[answerPosition];
       if(clickedColor === pickedColor && clickedShape === pickedShape){
-        correct +=1;
+        lastWasCorrect=true;
+        correct++;
       //  newShapes(); //error here
       } else {
-        wrong +=1;
+        lastWasCorrect=false;
+        wrong++;
       //  newShapes();//error here
 
       }
+      updateScore(lastWasCorrect);
       resetShapes();
       updateDisplay();
       });
@@ -86,13 +92,13 @@ var myVar;
 
   //changing colors and text content with selectors
 
-{//initial control code
-
-
-  resetShapes();
-  updateDisplay();
-
-}
+// {//initial control code
+//
+//
+//   resetShapes();
+//   updateDisplay();
+//
+// }
 
 
 //functions
@@ -165,8 +171,6 @@ function updateCunterDisplay(){
 
     timerText.textContent = curTime;
 
-
-
 }
 
 
@@ -188,7 +192,17 @@ function updateCunterDisplay(){
 // }
 
 function endGame(){
-  errorMessage("method not made yet");
+  for(var i=0; i< shapes.length; i++){
+
+    shapes[i].color="white";
+  }
+
+    //removeListeners
+
+
+
+
+  errorMessage("method not done yet");
 }
 
 
@@ -216,7 +230,7 @@ myvar =  setInterval(function countdownUpdate(){
     } else {
        updateCunterDisplay();
        clearInterval(this);
-      endgame();
+      endGame();
       //return;
     }
   }, 1000);
@@ -271,7 +285,7 @@ function styleNewShapes(){
 
 
   if( numOfShapesToShow<shapes.length){
-    for (var j=numOfShapesToShow; j <=shapes.length; j++) {
+    for (var j=numOfShapesToShow; j <shapes.length; j++) {
 	shapes[j].style.backgroundColor = "#212121";
     }
 
@@ -295,11 +309,21 @@ function resetVariables(){
   score = 0;
   correct = 0;
   wrong = 0;
-  curTime = 41;
+  curTime = 5;
 }
 
 
-function updateScore(){
+function updateScore(ansCorrect){
+  if (ansCorrect){
+    score = score*2+30;
+  } else{
+    score -= Math.floor(score*0.7+15);
+  }
+
+  if (score<0){
+    score = 0;
+  }
+  scoreText.textContent = "Score: "+ score;
 
 }
 
