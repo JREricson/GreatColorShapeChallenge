@@ -67,11 +67,13 @@ var countDownTimer;
   //event listeners for buttons
   newGameBtn.addEventListener("click", function(){
   	newGame();
+    ItemClickedSound();
   });
 
   difficultyBtn.addEventListener("click", function(){
   	curMode = changeMode();
     newGame();
+    ItemClickedSound();
   });
 
     addGamelogicListenersToShapes();
@@ -386,6 +388,7 @@ function addGamelogicListenersToShapes(){
 for(var i=0; i< numOfShapesToShow; i++){
 
   shapes[i].addEventListener("click", function shapeLogic(){
+    ItemClickedSound();
   var clickedColor = this.style.backgroundColor;
   var clickedShape = shapeList[answerPosition];
   if(clickedColor === pickedColor && clickedShape === pickedShape){
@@ -406,7 +409,11 @@ for(var i=0; i< numOfShapesToShow; i++){
 
 }
 
+function ItemClickedSound(){
+  var audio = new Audio('media/476816__victorium183__menuchange.wav'); //https://freesound.org/people/josomebody/sounds/84226/
+audio.play();
 
+}
 
 
 
