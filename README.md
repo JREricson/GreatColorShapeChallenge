@@ -5,3 +5,10 @@ A game I made to familiarize myself with javascript DOM manipulation. A user is 
 
 
 The game was based on an RGB color picker game made by Colte Steele  (https://github.com/Colt?tab=repositories)
+
+![image of page](https://raw.githubusercontent.com/JREricson/GreatColorShapeChallenge/master/colorShapeImg.png)
+
+Static site: [hosted here](https://jrericson.github.io/GreatColorShapeChallenge/)
+
+## Languages/Concepts
+DOM manipulation, Javascript, dynamic scripts, HTML, CSS
