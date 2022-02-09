@@ -357,7 +357,7 @@ function resetVariables(){
   score = 0;
   correct = 0;
   wrong = 0;
-  curTime = 5;
+  curTime = 20;
 }
 
 
